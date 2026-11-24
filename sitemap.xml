@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://maalem-alqanoon.github.io/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://maalem-alqanoon.github.io/</loc></url>
+  <url><loc>https://maalem-alqanoon.github.io/articles/</loc></url>
+  <url><loc>https://maalem-alqanoon.github.io/articles/anwa3-alsharikat-fi-misr/</loc></url>
+  <url><loc>https://maalem-alqanoon.github.io/articles/alfarq-bayn-aljinaya-waljunha-walmukhalafa/</loc></url>
+  <url><loc>https://maalem-alqanoon.github.io/articles/hoquq-almutaham-enda-alqabd/</loc></url>
+  <url><loc>https://maalem-alqanoon.github.io/articles/alkhul3-fi-alqanoon-almisri/</loc></url>
+  <url><loc>https://maalem-alqanoon.github.io/articles/sin-alhadana-fi-misr/</loc></url>
+  <url><loc>https://maalem-alqanoon.github.io/articles/da3wa-seha-wanafath-aqd-albay3/</loc></url>
+  <url><loc>https://maalem-alqanoon.github.io/articles/fatrat-alekhtibar-fi-aqd-alamal/</loc></url>
+  <url><loc>https://maalem-alqanoon.github.io/articles/anwa3-iqamat-alajanib-fi-misr/</loc></url>
+  <url><loc>https://maalem-alqanoon.github.io/articles/alaqd-shariat-almuta3aqidin/</loc></url>
+  <url><loc>https://maalem-alqanoon.github.io/articles/altaqadum-fi-alqanoon-almadani/</loc></url>
 </urlset>
