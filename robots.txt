@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://maalem-alqanoon.github.io/sitemap.xml
