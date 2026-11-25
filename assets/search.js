@@ -15,3 +15,13 @@ function maalemContrastFix(){
  document.querySelectorAll('body *').forEach(e=>{if(e.closest('script,style,site-header')||['IMG','VIDEO','CANVAS'].includes(e.tagName))return;let s=getComputedStyle(e),c=rgb(s.color),b=bg(e);if(!c||lum(b)>.18)return;let ratio=(Math.max(lum(c),lum(b))+.05)/(Math.min(lum(c),lum(b))+.05);if(ratio<4.5)e.style.setProperty('color',/^H[1-6]$/.test(e.tagName)?'#f1d88e':'#f7f5ee','important')});
 }
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',maalemContrastFix)}else{maalemContrastFix()}
+
+/* Approved navy and gold, 25 Nov 2026 */
+function maalemNavyGold(){
+const st=document.createElement('style');st.textContent=':root{--ink:#14283f!important;--navy:#102b48!important;--navy2:#1b4167!important;--muted:#55697c!important}';document.head.appendChild(st);
+function green(v){let m=v.match(/rgba?\((\d+), (\d+), (\d+)/);return m&&+m[2]>+m[1]*1.13&&+m[2]>+m[3]*1.09&&+m[2]<180}
+function color(v){return v.replace(/rgba?\([^)]+\)/g,c=>green(c)?'rgb(16,43,72)':c)}
+function fix(scope){scope.querySelectorAll('*').forEach(e=>{if(['IMG','VIDEO','CANVAS','STYLE','SCRIPT'].includes(e.tagName))return;let s=getComputedStyle(e);for(let k of ['color','background-color','background-image','border-top-color','border-right-color','border-bottom-color','border-left-color','fill','stroke']){let v=s.getPropertyValue(k),nv=color(v);if(nv!==v)e.style.setProperty(k,nv,'important')}if(e.shadowRoot)fix(e.shadowRoot)})}fix(document);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',maalemNavyGold);else maalemNavyGold();
+addEventListener('load',maalemNavyGold);
