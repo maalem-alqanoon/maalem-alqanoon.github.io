@@ -25,3 +25,32 @@ function fix(scope){scope.querySelectorAll('*').forEach(e=>{if(['IMG','VIDEO','C
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',maalemNavyGold);else maalemNavyGold();
 addEventListener('load',maalemNavyGold);
+
+/* Approved compact navigation, 25 Nov 2026 */
+function maalemCompactDropdowns(){
+const host=document.querySelector('site-header');if(!host?.shadowRoot||host.dataset.compactReady)return;host.dataset.compactReady='1';
+const root=document.querySelector('site-header').shadowRoot,nav=root.querySelector('#compact-menu-pills');
+root.querySelector('.compact-menu-arrow')?.remove();nav.classList.remove('is-collapsed');
+const style=document.createElement('style');style.textContent=`
+.compact-menu-arrow{display:none!important}header .desktop-links#compact-menu-pills{display:flex!important;flex-wrap:nowrap!important;grid-template-columns:none!important;justify-content:center!important;gap:6px!important;width:100%!important;max-width:100%!important;margin:0!important;padding:10px 0!important;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:thin;scrollbar-color:#c8a24a55 transparent;max-height:none!important;opacity:1!important;visibility:visible!important}
+#compact-menu-pills>a,#compact-menu-pills>button{flex:0 0 auto!important;white-space:nowrap!important;min-width:0!important;min-height:36px!important;padding:7px 13px!important;border-radius:9px!important;border:1px solid #c8a24a55!important;background:#193650!important;color:#f4f2ec!important;font:700 13px/1.6 'Cairo',sans-serif!important;box-shadow:none!important;text-align:center!important;text-decoration:none!important;cursor:pointer}
+#compact-menu-pills>.selected,#compact-menu-pills>[aria-expanded=true]{background:#d8b85d!important;color:#102b48!important;border-color:#d8b85d!important}
+.preview-drop{position:fixed;z-index:200;top:var(--drop-top);right:var(--drop-right);width:225px;max-width:calc(100vw - 24px);background:#fffdf8;border:1px solid #c8a24a99;border-top:3px solid #c8a24a;border-radius:0 0 12px 12px;padding:8px;box-shadow:0 16px 36px #071c3740;text-align:right;color:#102b48;max-height:55vh;overflow:auto}
+.preview-drop[hidden]{display:none}.preview-drop a{display:block;padding:8px 10px;border-radius:7px;font:700 12px/1.6 'Cairo',sans-serif;color:#102b48;text-decoration:none;border-bottom:1px solid #e7dfce}.preview-drop a:last-child{border:0}.preview-drop a:hover,.preview-drop a:focus{background:#f1e6c8}.preview-drop small{display:block;color:#88703a;font:11px/1.5 'Cairo',sans-serif;padding:4px 12px 8px}
+@media(max-width:850px){header .desktop-links#compact-menu-pills{justify-content:flex-start!important;gap:5px!important;flex-basis:100%!important;padding:8px 0!important}#compact-menu-pills>a,#compact-menu-pills>button{font-size:11px!important;padding:7px 9px!important;min-height:34px!important}header .nav{padding-bottom:0!important}.preview-drop{width:210px}}
+`;root.append(style);const reset=document.createElement('style');reset.textContent='header .nav #compact-menu-pills>a:not(.selected){background:#193650!important;background-image:none!important;color:#f4f2ec!important;box-shadow:none!important}';root.append(reset);
+nav.querySelectorAll('a').forEach(a=>{a.classList.remove('active');a.removeAttribute('style')});
+const current=location.pathname;const selected=[...nav.querySelectorAll('a')].find(a=>a.getAttribute('href')===current);if(selected)selected.classList.add('selected');nav.querySelectorAll('a:not(.selected)').forEach(a=>{a.style.setProperty('background','#193650','important');a.style.setProperty('background-image','none','important');a.style.setProperty('box-shadow','none','important');a.style.setProperty('color','#f4f2ec','important')});
+const drop=document.createElement('div');drop.className='preview-drop';drop.hidden=true;drop.setAttribute('role','region');root.append(drop);
+const menus={
+'/library/':[['المكتبة القانونية','/library/'],['المقالات القانونية','/articles/'],['الصيغ والعقود','/forms/']],
+'/#p-areas':[['الجنح والجنايات','/#practice-1'],['الأحوال الشخصية','/#practice-2'],['الشركات والجمعيات','/#practice-3'],['القضايا المدنية','/#practice-4'],['قضايا العمل','/#practice-5'],['شؤون الأجانب','/#practice-6']],
+'/barcodes/':[['كل باركود الجلسات','/barcodes/'],['الجيزة','/barcodes/#g0'],['القاهرة','/barcodes/#g1'],['الإسكندرية','/barcodes/#g2'],['القليوبية','/barcodes/#g3'],['المنوفية','/barcodes/#g4'],['البحيرة','/barcodes/#g5']]
+};
+document.querySelectorAll('#p-areas .pc').forEach((e,i)=>e.id='practice-'+(i+1));
+function close(){drop.hidden=true;nav.querySelectorAll('button').forEach(b=>b.setAttribute('aria-expanded','false'))}
+Object.entries(menus).forEach(([href,items])=>{const a=nav.querySelector(`a[href="${href}"]`);if(!a)return;const b=document.createElement('button');if(a.classList.contains('selected'))b.classList.add('selected');b.type='button';b.innerHTML=a.textContent+' <span aria-hidden="true">⌄</span>';b.setAttribute('aria-expanded','false');b.setAttribute('aria-haspopup','true');a.replaceWith(b);b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')==='true';close();if(open)return;drop.innerHTML='<small>'+a.textContent+'</small>'+items.map(([t,h])=>`<a href="${h}">${t}</a>`).join('');drop.hidden=false;b.setAttribute('aria-expanded','true');const r=nav.getBoundingClientRect(),br=b.getBoundingClientRect();drop.style.setProperty('--drop-top',(r.bottom)+'px');drop.style.setProperty('--drop-right',Math.max(12,Math.min(innerWidth-272,innerWidth-br.right))+'px')})});
+document.addEventListener('click',e=>{if(!e.composedPath().some(n=>n===nav||n===drop))close()});drop.addEventListener('click',e=>{if(e.target.closest('a'))close()});document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});window.addEventListener('scroll',close,{passive:true});window.addEventListener('resize',close);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',maalemCompactDropdowns);else maalemCompactDropdowns();
+addEventListener('load',maalemCompactDropdowns);
