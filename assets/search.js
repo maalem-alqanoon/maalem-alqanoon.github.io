@@ -30,3 +30,6 @@ q.addEventListener('input',function(){loadC(run);run()});q.addEventListener('foc
 document.addEventListener('click',function(e){if(!bar.contains(e.target))r.style.display='none'});
 q.addEventListener('keydown',function(e){if(e.key==='Escape'){r.style.display='none';q.blur()}});
 })();
+
+/* Article related reading. */
+(()=>{if(!location.pathname.startsWith('/articles/')||location.pathname==='/articles/')return;const s=document.createElement('script');s.src='/assets/related-reading.js?v=1';document.head.appendChild(s)})();
